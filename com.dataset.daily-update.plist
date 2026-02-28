@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.dataset.daily-update</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/davidxbinko/projects/dataset/.venv/bin/python</string>
+        <string>/Users/davidxbinko/projects/dataset/update_daily.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/davidxbinko/projects/dataset</string>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>7</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/davidxbinko/projects/dataset/logs/daily-update.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/davidxbinko/projects/dataset/logs/daily-update-error.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+</dict>
+</plist>
