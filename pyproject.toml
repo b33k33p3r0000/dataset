@@ -15,6 +15,9 @@ dev = [
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "tests"]
+markers = [
+    "integration: real API calls (slow, needs network)",
+]
 
 [build-system]
 requires = ["hatchling"]
