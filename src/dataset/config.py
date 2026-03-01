@@ -7,7 +7,7 @@ from typing import Dict, List
 SYMBOLS: List[str] = [
     "BTC/USDT", "ETH/USDT", "SOL/USDT",
     "XRP/USDT", "BNB/USDT", "LINK/USDT",
-    "SUI/USDT", "AVAX/USDT", "ADA/USDT",
+    "SUI/USDT", "DOT/USDT", "ADA/USDT",
     "NEAR/USDT", "LTC/USDT", "APT/USDT",
     "ARB/USDT", "OP/USDT", "INJ/USDT",
 ]
