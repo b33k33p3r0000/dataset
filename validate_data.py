@@ -4,7 +4,7 @@
 import logging
 import sys
 
-from dataset.config import SYMBOLS, DATA_DIR, REPORTS_DIR, TIMEFRAMES, symbol_to_dirname
+from dataset.config import SYMBOLS, DATA_DIR, REPORTS_DIR, TIMEFRAMES, TF_MINUTES, symbol_to_dirname
 from dataset.storage import load_parquet
 from dataset.validate import validate_file, Severity
 from dataset.report import generate_report, save_report
@@ -15,11 +15,6 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
 )
 logger = logging.getLogger(__name__)
-
-TF_MINUTES = {
-    "15m": 15, "1h": 60, "4h": 240, "8h": 480,
-    "12h": 720, "1d": 1440, "1w": 10080,
-}
 
 
 def main():

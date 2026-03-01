@@ -15,15 +15,17 @@ SYMBOLS: List[str] = [
 # ── Timeframes ───────────────────────────────────────────
 TIMEFRAMES: List[str] = ["15m", "1h", "4h", "8h", "12h", "1d", "1w"]
 
-TF_MS: Dict[str, int] = {
-    "15m": 900_000,
-    "1h": 3_600_000,
-    "4h": 14_400_000,
-    "8h": 28_800_000,
-    "12h": 43_200_000,
-    "1d": 86_400_000,
-    "1w": 604_800_000,
+TF_MINUTES: Dict[str, int] = {
+    "15m": 15,
+    "1h": 60,
+    "4h": 240,
+    "8h": 480,
+    "12h": 720,
+    "1d": 1440,
+    "1w": 10080,
 }
+
+TF_MS: Dict[str, int] = {tf: m * 60_000 for tf, m in TF_MINUTES.items()}
 
 # ── Fetch constants ──────────────────────────────────────
 OHLCV_LIMIT_PER_CALL = 1500        # Max bars per API request
@@ -36,6 +38,8 @@ MAX_HISTORY_YEARS = 10             # Cap history at 10 years
 # ── Validation constants ─────────────────────────────────
 EARLY_LISTING_DAYS = 7             # Flag first N days after listing
 SHORT_GAP_THRESHOLD = 3            # Gaps <= N bars = WARN, > N = ERROR
+STALE_THRESHOLD_DAYS = 5           # WARN if last bar older than N days
+KNOWN_GAPS_BEFORE = "2024-01-01"   # Gaps before this date = INFO (historical Binance maintenance)
 
 # ── Paths ────────────────────────────────────────────────
 import pathlib

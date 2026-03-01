@@ -6,7 +6,9 @@ from typing import List
 
 import pandas as pd
 
-from dataset.config import SHORT_GAP_THRESHOLD, EARLY_LISTING_DAYS
+from datetime import datetime, timezone
+
+from dataset.config import SHORT_GAP_THRESHOLD, EARLY_LISTING_DAYS, STALE_THRESHOLD_DAYS, KNOWN_GAPS_BEFORE
 
 
 class Severity(Enum):
@@ -22,11 +24,16 @@ class Issue:
 
 
 def check_gaps(df: pd.DataFrame, tf_minutes: int) -> List[Issue]:
-    """Detect missing bars based on expected frequency."""
+    """Detect missing bars based on expected frequency.
+
+    Gaps before KNOWN_GAPS_BEFORE are downgraded to INFO (historical
+    Binance maintenance windows that will never be filled).
+    """
     if len(df) < 2:
         return []
     issues: List[Issue] = []
     expected_delta = pd.Timedelta(minutes=tf_minutes)
+    known_cutoff = pd.Timestamp(KNOWN_GAPS_BEFORE, tz="UTC")
     deltas = df.index.to_series().diff().dropna()
     gap_mask = deltas > expected_delta
 
@@ -36,7 +43,12 @@ def check_gaps(df: pd.DataFrame, tf_minutes: int) -> List[Issue]:
     gap_starts = deltas[gap_mask]
     for ts, delta in gap_starts.items():
         n_missing = int(delta / expected_delta) - 1
-        sev = Severity.WARN if n_missing <= SHORT_GAP_THRESHOLD else Severity.ERROR
+        if ts < known_cutoff:
+            sev = Severity.INFO
+        elif n_missing <= SHORT_GAP_THRESHOLD:
+            sev = Severity.WARN
+        else:
+            sev = Severity.ERROR
         issues.append(Issue(
             severity=sev,
             message=f"Gap: {n_missing} missing bar(s) before {ts}",
@@ -95,6 +107,21 @@ def check_early_listing(df: pd.DataFrame, early_days: int = EARLY_LISTING_DAYS) 
     )]
 
 
+def check_stale(df: pd.DataFrame, stale_days: int = STALE_THRESHOLD_DAYS) -> List[Issue]:
+    """Warn if last bar is older than N days."""
+    if df.empty:
+        return []
+    last_ts = df.index[-1]
+    now = pd.Timestamp.now(tz="UTC")
+    age = now - last_ts
+    if age.days >= stale_days:
+        return [Issue(
+            Severity.WARN,
+            f"Stale data: last bar {last_ts.date()} is {age.days} days old",
+        )]
+    return []
+
+
 def validate_file(
     df: pd.DataFrame,
     tf_minutes: int,
@@ -108,4 +135,5 @@ def validate_file(
     issues.extend(check_ohlcv_sanity(df))
     issues.extend(check_zero_volume(df))
     issues.extend(check_early_listing(df, early_days))
+    issues.extend(check_stale(df))
     return issues
