@@ -3,13 +3,15 @@
 from typing import Dict, List
 
 # ── Symbols ──────────────────────────────────────────────
-# 15 USDT perpetual pairs (MQE pair list, tier-ordered)
+# 20 USDT perpetual pairs (MQE pair list, tier-ordered)
 SYMBOLS: List[str] = [
     "BTC/USDT", "ETH/USDT", "SOL/USDT",
     "XRP/USDT", "BNB/USDT", "LINK/USDT",
     "SUI/USDT", "DOT/USDT", "ADA/USDT",
     "NEAR/USDT", "LTC/USDT", "APT/USDT",
     "ARB/USDT", "OP/USDT", "INJ/USDT",
+    "AVAX/USDT", "DOGE/USDT", "ATOM/USDT",
+    "FIL/USDT", "UNI/USDT",
 ]
 
 # ── Timeframes ───────────────────────────────────────────
