@@ -5,3 +5,4 @@ data/
 logs/
 reports/
 .env
+com.dataset.daily-update.plist

@@ -6,6 +6,11 @@ import traceback
 from datetime import datetime, timezone
 from urllib.request import Request, urlopen
 import json
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 import ccxt
 
@@ -22,17 +27,15 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-DISCORD_WEBHOOK = (
-    "https://discord.com/api/webhooks/1471152813559251152/"
-    "5j0fnj_btTnd7YbjwYGooSugPs5wMygN-wtOPLrRv0kjqtWVN41Qm_bhmUyA3blT4_At"
-)
-
-
 def send_discord(message: str) -> None:
     """Send message to Discord webhook (best-effort, never raises)."""
+    webhook_url = os.environ.get("DISCORD_WEBHOOK", "")
+    if not webhook_url:
+        logger.debug("DISCORD_WEBHOOK not set, skipping notification")
+        return
     try:
         payload = json.dumps({"content": message}).encode("utf-8")
-        req = Request(DISCORD_WEBHOOK, data=payload, method="POST")
+        req = Request(webhook_url, data=payload, method="POST")
         req.add_header("Content-Type", "application/json")
         req.add_header("User-Agent", "dataset-bot")
         urlopen(req, timeout=10)

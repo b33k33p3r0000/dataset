@@ -7,12 +7,12 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/davidxbinko/projects/dataset/.venv/bin/python</string>
-        <string>/Users/davidxbinko/projects/dataset/update_daily.py</string>
+        <string>/Users/YOUR_USER/projects/dataset/.venv/bin/python</string>
+        <string>/Users/YOUR_USER/projects/dataset/update_daily.py</string>
     </array>
 
     <key>WorkingDirectory</key>
-    <string>/Users/davidxbinko/projects/dataset</string>
+    <string>/Users/YOUR_USER/projects/dataset</string>
 
     <key>StartCalendarInterval</key>
     <dict>
@@ -23,10 +23,10 @@
     </dict>
 
     <key>StandardOutPath</key>
-    <string>/Users/davidxbinko/projects/dataset/logs/daily-update.log</string>
+    <string>/Users/YOUR_USER/projects/dataset/logs/daily-update.log</string>
 
     <key>StandardErrorPath</key>
-    <string>/Users/davidxbinko/projects/dataset/logs/daily-update-error.log</string>
+    <string>/Users/YOUR_USER/projects/dataset/logs/daily-update-error.log</string>
 
     <key>EnvironmentVariables</key>
     <dict>

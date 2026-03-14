@@ -6,6 +6,7 @@ dependencies = [
     "pandas>=2.2",
     "ccxt>=4.5.35",
     "pyarrow>=18.0.0",
+    "python-dotenv>=1.0",
 ]
 
 [dependency-groups]
