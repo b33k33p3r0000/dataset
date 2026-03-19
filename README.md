@@ -2,9 +2,9 @@
 
 Centralized local OHLCV dataset for crypto backtesting. Fetches historical and daily data from Binance, stores as Parquet files, validates data integrity.
 
-## Pairs (15)
+## Pairs (20)
 
-BTC, ETH, SOL, XRP, BNB, LINK, SUI, DOT, ADA, NEAR, LTC, APT, ARB, OP, INJ (USDT perpetuals)
+BTC, ETH, SOL, XRP, BNB, LINK, SUI, DOT, ADA, NEAR, LTC, APT, ARB, OP, INJ, AVAX, DOGE, ATOM, FIL, UNI (USDT perpetuals)
 
 ## Timeframes
 
